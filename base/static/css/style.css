@@ -1,0 +1,126 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.friends {
+  height: 84vh;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.friends .friends__friend {
+  padding: 10px;
+  cursor: pointer;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.friends .friends__friend h6 {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.friends .friends__friend img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  border-radius: 50%;
+  -webkit-box-shadow: 0 0 10px 1px #d5f8f8;
+          box-shadow: 0 0 10px 1px #d5f8f8;
+}
+
+.friends .friends__friend:hover {
+  background-color: rgba(194, 244, 253, 0.2);
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.friends .friends__friend:hover img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  border-radius: 50%;
+  -webkit-box-shadow: 0 0 10px 1px #d5f8f8;
+          box-shadow: 0 0 10px 1px #d5f8f8;
+}
+
+.chat {
+  position: relative;
+  height: 76vh;
+  overflow-y: auto;
+}
+
+.chat .chat__message_left {
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: rgba(194, 220, 253, 0.2);
+  max-width: 50%;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.chat .chat__message_left p {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.chat .chat__message_left .time {
+  color: gray;
+}
+
+.chat .chat__message_left .dot {
+  margin: 0 5px !important;
+}
+
+.chat .chat__message_right {
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
+  margin: 0 0 0 auto;
+  margin-bottom: 20px;
+  background-color: rgba(194, 244, 253, 0.2);
+  max-width: 50%;
+  min-width: 200px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.chat .chat__message_right p {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.chat .chat__message_right .time {
+  color: gray;
+}
+
+.chat .chat__message_right .dot {
+  margin: 0 5px !important;
+}
+
+.chat .chat__go_back {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+.chat .chat__message_send {
+  width: 100%;
+  padding: 8px 18px;
+  bottom: 0;
+  left: 0;
+  margin-top: 2vh !important;
+  background-color: red;
+}
+
+.category {
+  height: 10vh;
+  margin: 2vh 0;
+}
+/*# sourceMappingURL=style.css.map */
