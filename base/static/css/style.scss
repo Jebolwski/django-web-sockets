@@ -1,17 +1,26 @@
-
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  .text-primary {
+    color: #5b9cff!important;
+}
+}
+
+p{
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 
+
+
 .friends {
-  height: 84vh;
+  height: 80vh;
   overflow-y: auto;
   padding: 10px;
   .friends__friend {
+    border-bottom: 1px solid rgb(220, 220, 220);
     padding: 10px;
     cursor: pointer;
     transition: 0.2s;

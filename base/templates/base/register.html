@@ -1,0 +1,60 @@
+{% extends "base/base.html" %} 
+{% block title %}Register{% endblock title %} 
+{% block content %}
+<div class="container mt-4">
+    <div class="shadow rounded-3 p-4">
+        <form method="POST">
+            {% csrf_token %}
+            <h4 class="text-center py-3">Register</h4>
+            <label for="id_username" class="mt-2">Kullanıcı Adı</label>
+            <div>{{form.username}}</div>
+            {% if form.username.errors %}
+            <ul class="list-unstyled">
+                <li class="mt-4 pt-1 pb-1 alert alert-danger">{{form.username.errors}}</li>
+            </ul>
+            {% endif %}
+            <label for="id_email" class="mt-4">Email</label>
+            <div>{{form.email}}</div>
+            {% if form.email.errors %}
+            <ul class="list-unstyled">
+                <li class="mt-4 pt-1 pb-1 alert alert-danger">{{form.email.errors}}</li>
+            </ul> {% endif %}
+            <label for="id_password1" class="mt-4">Şifre</label>
+            <div class="row">
+                <div class="col">{{form.password1}}</div>
+                <div class="col-auto p-0">
+                    <span data-toggle="popover" title="Kurallar" class="profil-username">
+                        <i class="fa-solid fa-info p-3 fa-sm"></i>
+                    </span>
+                </div>
+            </div>
+            {% if form.password1.errors %}
+            <ul class="list-unstyled">
+                <li class="mt-4 pt-1 pb-1 alert alert-danger col-10 col-md-5 center text-center">{{form.password1.errors}}</li>
+            </ul>
+            {% endif %}
+
+
+            <label for="id_password2" class="mt-4">Şifre (Tekrar)</label>
+            <div class="row">
+                <div class="col">{{form.password2}}</div>
+                <div class="col-auto p-0">
+                        <span data-toggle="popover1" title="Kurallar" class="profil-username" data-html="true">
+                            <i class="fa-solid fa-info p-3 fa-sm"></i>
+                        </span>
+                </div>
+            </div>
+
+            {% if form.password2.errors %}
+            <ul class="list-unstyled">
+                <li class="mt-4 pt-1 pb-1 alert alert-danger col-10 col-md-5 center text-center">{{form.password2.errors}}</li>
+            </ul> 
+            {% endif %}
+
+            <div class="text-center">
+                <input type="submit" value="Register" class="btn btn-success px-4 mt-5" />
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

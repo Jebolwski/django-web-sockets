@@ -1,0 +1,106 @@
+{% extends "base/base.html" %} 
+{% block title %}Lobby{% endblock title %} 
+{% block content %}
+<div class="container mt-4">
+    <div class="shadow rounded-3 p-3 mb-3 d-flex align-items-center">  
+        <div class="row justify-content-between" style="width: 100%">
+            <div class="col-auto">
+                <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-comments fa-lg ps-2 text-primary"></i>
+                    <p class="ms-3 fw-bold">{{request.user.username}}</p>
+                </div>
+            </div>
+            <div class="col-auto">
+                <a href="{% url 'logout' %}" class="text-primary">
+                    <i class="fa-solid fa-arrow-right-from-bracket fa-lg" title="Logout"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="shadow rounded-3 p-3 friends">
+        <div class="friends__friend" onclick="to_chat()">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="d-flex align-items-center">
+                            <img src="https://s.yimg.com/ny/api/res/1.2/GC1RSc6bSuuFutkw2AVceg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQ1Mg--/https://s.yimg.com/uu/api/res/1.2/QowPP1GDV0o1o6OLUpkmhg--~B/aD00NDU7dz02MzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/fr/article.rmcsport.com/0e87a70545da7e6acd2bb7210ee96b2c" alt="profile_picture" title="Profile pic" />
+                            <h6>Mert Gökmen</h6>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa-solid fa-chevron-right" title="Chat"></i>
+                    </div>
+                </div>
+        </div>
+        <div class="friends__friend" onclick="to_chat()">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="d-flex align-items-center">
+                            <img src="https://s.yimg.com/ny/api/res/1.2/GC1RSc6bSuuFutkw2AVceg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQ1Mg--/https://s.yimg.com/uu/api/res/1.2/QowPP1GDV0o1o6OLUpkmhg--~B/aD00NDU7dz02MzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/fr/article.rmcsport.com/0e87a70545da7e6acd2bb7210ee96b2c" alt="profile_picture" title="Profile pic" />
+                            <h6>Mert Gökmen</h6>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa-solid fa-chevron-right" title="Chat"></i>
+                    </div>
+                </div>
+        </div>
+        <div class="friends__friend" onclick="to_chat()">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="d-flex align-items-center">
+                            <img src="https://s.yimg.com/ny/api/res/1.2/GC1RSc6bSuuFutkw2AVceg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQ1Mg--/https://s.yimg.com/uu/api/res/1.2/QowPP1GDV0o1o6OLUpkmhg--~B/aD00NDU7dz02MzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/fr/article.rmcsport.com/0e87a70545da7e6acd2bb7210ee96b2c" alt="profile_picture" title="Profile pic" />
+                            <h6>Mert Gökmen</h6>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa-solid fa-chevron-right" title="Chat"></i>
+                    </div>
+                </div>
+        </div>
+        <div class="friends__friend" onclick="to_chat()">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="d-flex align-items-center">
+                            <img src="https://s.yimg.com/ny/api/res/1.2/GC1RSc6bSuuFutkw2AVceg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQ1Mg--/https://s.yimg.com/uu/api/res/1.2/QowPP1GDV0o1o6OLUpkmhg--~B/aD00NDU7dz02MzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/fr/article.rmcsport.com/0e87a70545da7e6acd2bb7210ee96b2c" alt="profile_picture" title="Profile pic" />
+                            <h6>Mert Gökmen</h6>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa-solid fa-chevron-right" title="Chat"></i>
+                    </div>
+                </div>
+        </div>
+        <div class="friends__friend" onclick="to_chat()">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="d-flex align-items-center">
+                            <img src="https://s.yimg.com/ny/api/res/1.2/GC1RSc6bSuuFutkw2AVceg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQ1Mg--/https://s.yimg.com/uu/api/res/1.2/QowPP1GDV0o1o6OLUpkmhg--~B/aD00NDU7dz02MzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/fr/article.rmcsport.com/0e87a70545da7e6acd2bb7210ee96b2c" alt="profile_picture" title="Profile pic" />
+                            <h6>Mert Gökmen</h6>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa-solid fa-chevron-right" title="Chat"></i>
+                    </div>
+                </div>
+        </div>
+        <div class="friends__friend" onclick="to_chat()">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="d-flex align-items-center">
+                            <img src="https://s.yimg.com/ny/api/res/1.2/GC1RSc6bSuuFutkw2AVceg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQ1Mg--/https://s.yimg.com/uu/api/res/1.2/QowPP1GDV0o1o6OLUpkmhg--~B/aD00NDU7dz02MzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/fr/article.rmcsport.com/0e87a70545da7e6acd2bb7210ee96b2c" alt="profile_picture" title="Profile pic" />
+                            <h6>Mert Gökmen</h6>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa-solid fa-chevron-right" title="Chat"></i>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    $(".friends__friend").last().css("border-bottom","0")
+</script>
+{% endblock %}
