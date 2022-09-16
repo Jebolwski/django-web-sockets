@@ -1,109 +1,67 @@
 {% extends "base/base.html" %} {% block title %}Lobby{% endblock title %} 
 {% block content %}
 <div class="container-fluid">
-    <div class="category shadow rounded-3 p-3">  
-        <div class="text-end">
-            <a href="{% url 'home' %}" class="btn btn-outline-dark">Leave Chat</a>
-        </div>  
-    </div>
-    <div class="row">
-        <div class="col-12 col-md-auto">
-            <div class="friends rounded-3 p-3 shadow d-none d-md-block">
-                <div class="friends__friend" onclick="to_chat()">
-                    <div class="d-flex align-items-center">
-                        <img src="https://s.yimg.com/ny/api/res/1.2/GC1RSc6bSuuFutkw2AVceg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQ1Mg--/https://s.yimg.com/uu/api/res/1.2/QowPP1GDV0o1o6OLUpkmhg--~B/aD00NDU7dz02MzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/fr/article.rmcsport.com/0e87a70545da7e6acd2bb7210ee96b2c" alt="profile_picture" title="Profile pic">
-                        <h6>Mert Gökmen</h6>
+    <div class="category shadow rounded-3 py-2 px-3">  
+        <div class="row justify-content-between align-items-center" style="width: 100%">
+            <div class="col-auto">
+                <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-comments fa-lg ps-2 text-primary"></i>
+                    <div class="ms-3">
+                        <p class="fw-bold">{{room.room_name}}</p>
+                        <small>{{request.user.username}}</small>
                     </div>
                 </div>
-                <div class="friends__friend" onclick="to_chat()">
-                    <div class="d-flex align-items-center">
-                        <img src="https://img.fanatik.com.tr/img/78/740x418/610c6938ae298b8328517710.jpg" alt="profile_picture" title="Profile pic">
-                        <h6>Neanos</h6>
-                    </div>
-                </div>
-                <div class="friends__friend" onclick="to_chat()">
-                    <div class="d-flex align-items-center">
-                        <img src="https://s.yimg.com/ny/api/res/1.2/GC1RSc6bSuuFutkw2AVceg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQ1Mg--/https://s.yimg.com/uu/api/res/1.2/QowPP1GDV0o1o6OLUpkmhg--~B/aD00NDU7dz02MzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/fr/article.rmcsport.com/0e87a70545da7e6acd2bb7210ee96b2c" alt="profile_picture" title="Profile pic">
-                        <h6>BC</h6>
-                    </div>
-                </div>
-                <div class="friends__friend" onclick="to_chat()">
-                    <div class="d-flex align-items-center">
-                        <img src="https://img.fanatik.com.tr/img/78/740x418/610c6938ae298b8328517710.jpg" alt="profile_picture" title="Profile pic">
-                        <h6>Hunter Campbell</h6>
-                    </div>
-                </div>
-                <div class="friends__friend" onclick="to_chat()">
-                    <div class="d-flex align-items-center">
-                        <img src="https://sportshub.cbsistatic.com/i/r/2017/05/02/c9bb1b4b-3e08-45e6-abf4-42eb8fb8c5d8/thumbnail/640x360/c3411c7d2438a632daab77b6603fa4e4/golovkin-ggg-watching-boxing.jpg" alt="profile_picture" title="Profile pic">
-                        <h6>Leo Messi</h6>
-                    </div>
-                </div>
-                <div class="friends__friend" onclick="to_chat()">
-                    <div class="d-flex align-items-center">
-                        <img src="https://s.yimg.com/ny/api/res/1.2/GC1RSc6bSuuFutkw2AVceg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQ1Mg--/https://s.yimg.com/uu/api/res/1.2/QowPP1GDV0o1o6OLUpkmhg--~B/aD00NDU7dz02MzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/fr/article.rmcsport.com/0e87a70545da7e6acd2bb7210ee96b2c" alt="profile_picture" title="Profile pic">
-                        <h6>Mert Gökmen</h6>
-                    </div>
-                </div>
-                <div class="friends__friend" onclick="to_chat()">
-                    <div class="d-flex align-items-center">
-                        <img src="https://sportshub.cbsistatic.com/i/r/2017/05/02/c9bb1b4b-3e08-45e6-abf4-42eb8fb8c5d8/thumbnail/640x360/c3411c7d2438a632daab77b6603fa4e4/golovkin-ggg-watching-boxing.jpg" alt="profile_picture" title="Profile pic">
-                        <h6>Leo Messi</h6>
-                    </div>
-                </div>
+            </div>
+            <div class="col-auto">
+                <a href="{% url 'logout' %}" class="text-primary">
+                    <i class="fa-solid fa-arrow-right-from-bracket fa-lg" title="Logout"></i>
+                </a>
             </div>
         </div>
+    </div>
+    <div class="row">
         <div class="col">
             <div class="chat shadow rounded-3">
-                <div class="d-none chat__go_back shadow-sm border-bottom bg-light p-2">
-                    <i class="fa-solid fa-arrow-left" onclick="back_to_friends()"></i>
+                <div class="chat__go_back shadow-sm border-bottom bg-light px-3 py-1">
+                    <a href="{% url 'home' %}">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
                 </div>
                 <div class="p-3 chat__messages">
-                    <div class="chat__message_left shadow-sm">
-                    <div class="d-flex align-items-center">
-                        <p class="fw-bold">Messi</p>
-                        <p class="dot">•</p>
-                        <p class="time">24dk</p>
-                    </div>
-                    <p>Antremana geliyorum</p>
-                    </div>
-                    <div class="chat__message_left shadow-sm">
-                    <div class="d-flex align-items-center">
-                        <p class="fw-bold">Messi</p>
-                        <p class="dot">•</p>
-                        <p class="time">24dk</p>
-                    </div>
-                    <p>Antremana geliyorum</p>
-                    </div>
-                    <div class="chat__message_right shadow-sm">
-                    <div class="d-flex align-items-center">
-                        <p class="fw-bold">Messi</p>
-                        <p class="dot">•</p>
-                        <p class="time">24dk</p>
-                    </div>
-                    <p>Antremana geliyorum</p>
-                    </div>
-                    <div class="chat__message_right shadow-sm">
-                    <div class="d-flex align-items-center">
-                        <p class="fw-bold">Mert</p>
-                        <p class="dot">•</p>
-                        <p class="time">24dk</p>
-                    </div>
-                    <p>Ben antremana geliyorum.Senin aq. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus, quo. Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, tempora.</p>
-                    </div>
+                    {% for mess in room_messages %}
+                        {% if mess.profile.user == request.user %}
+                            <div class="chat__message_right shadow-sm">
+                            <div class="d-flex align-items-center">
+                                <p class="fw-bold">{{mess.profile.user.username}}</p>
+                                <p class="dot">•</p>
+                                <p class="time">{{mess.create|time:"h:i a"}}</p>
+                            </div>
+                            <p>{{mess.text}}</p>
+                            </div>
+                        {% else %}
+                            <div class="chat__message_left shadow-sm">
+                            <div class="d-flex align-items-center">
+                                <p class="fw-bold">{{mess.profile.user.username}}</p>
+                                <p class="dot">•</p>
+                                <p class="time">{{mess.create|time:"h:i a"}}</p>
+                            </div>
+                            <p>{{mess.text}}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
-                
             </div>
             <form onsubmit="send_message(event)">
+                {% csrf_token %}
                 <div class="chat__message_send mt-2">
-                <div class="row">
+                    <div class="row">
                     <div class="col">
-                        <input type="text" class="form-control message_text" required />
+                        <input type="text" class="form-control message_text" placeholder="Your message..." required />
                     </div>
                     <div class="col-auto">
-                        <input type="submit" class="btn btn-dark" value="Send" />
+                        <input type="submit" class="btn btn-secondary" value="Send" />
                     </div>
-                </div>
+                    </div>
                 </div>
             </form>
         </div>
@@ -114,46 +72,116 @@
 {% block script %}
 <script type="text/javascript">
 
-    function back_to_friends(){
-        $(".friends").removeClass("d-none");
-        $(".chat").addClass("d-none");
-    }
-
-    function to_chat(){
-        $(".friends").addClass("d-none");
-        $(".chat").removeClass("d-none");
-    }
-
-    
-    $(window).resize(function(){
-        if($(window).width()>767){
-            $(".chat").removeClass("d-none");
-        }
-        if($(window).width()<767){
-            $(".chat__go_back").removeClass("d-none");
-        }
-        else{
-            $(".chat__go_back").addClass("d-none");
-        }
-    });
-
-    let url = `ws://${window.location.host}/ws/socket-server/`
+    let url = `ws://${window.location.host}/ws/socket-server/{{room.id}}/`;
 
     const chatSocket = new WebSocket(url);
 
     chatSocket.onmessage = function(e){
         let data = JSON.parse(e.data);
-        console.log("DATA",data);
+        console.log(data);
+        if(data.type=='botjoinmessagge'){
+            if (data.sender != "{{request.user.username}}"){
+                $('.chat__messages').append(
+                    `
+                    <div class="chat__message_left shadow-sm">
+                        <div class="d-flex align-items-center">
+                            <p class="fw-bold">${data.user}</p>
+                            <p class="dot">•</p>
+                            <p class="time">{% now "h:i a" %}</p>
+                        </div>
+                        <p>${data.message}</p>
+                    </div>
+                    `
+                )
+            }
+            
+            else{
+                $('.chat__messages').append(
+                    `
+                    <div class="chat__message_left shadow-sm">
+                        <div class="d-flex align-items-center">
+                            <p class="fw-bold">${data.user}</p>
+                            <p class="dot">•</p>
+                            <p class="time">{% now "h:i a" %}</p>
+                        </div>
+                        <p>Welcome to chat!</p>
+                    </div>
+                    `
+                )
+            }
+        }
+        else if(data.type=='botleavemessagge'){
+            $('.chat__messages').append(
+                `
+                <div class="chat__message_left shadow-sm">
+                    <div class="d-flex align-items-center">
+                        <p class="fw-bold">${data.user}</p>
+                        <p class="dot">•</p>
+                        <p class="time">{% now "h:i a" %}</p>
+                    </div>
+                    <p>${data.message}</p>
+                </div>
+                `
+            )
+        }
+        else if(data.type=='chat'){
+            if (data.user=="{{request.user.username}}"){
+                $('.chat__messages').append(
+                    `
+                    <div class="chat__message_right shadow-sm">
+                        <div class="d-flex align-items-center">
+                            <p class="fw-bold">${data.user}</p>
+                            <p class="dot">•</p>
+                            <p class="time">{% now "h:i a" %}</p>
+                        </div>
+                        <p>${data.message}</p>
+                    </div>
+                    `
+                )
+            }
 
+            else{
+                $('.chat__messages').append(
+                `
+                <div class="chat__message_left shadow-sm">
+                    <div class="d-flex align-items-center">
+                        <p class="fw-bold">${data.user}</p>
+                        <p class="dot">•</p>
+                        <p class="time">{% now "h:i a" %}</p>
+                    </div>
+                    <p>${data.message}</p>
+                </div>
+                `
+            )
+            }
+        }
+        
+        document.querySelector(".chat").scrollTop =
+            document.querySelector(".chat").scrollHeight;
     }
     
-    function send_message(event){
+    async function send_message(event){
         event.preventDefault();
         let message = $(".message_text").val();
         chatSocket.send(JSON.stringify({
-            "message":message
+            'username':'{{request.user.username}}',
+            'message':message,
+            'room':'{{room.id}}',
         }))
         $(".message_text").val("");
+
+
+        let form_data = new FormData();
+        form_data.append('text', message);
+        form_data.append('csrfmiddlewaretoken', "{{csrf_token}}");
+        form_data.append('room_id', '{{room.id}}');
+        let response = await fetch(window.location.origin+"/send-message/",{
+            method: "POST",
+            credentials: 'same-origin',
+            headers: { "X-CSRFToken": "{{csrf_token}}" },
+            body: form_data,
+        });
     }
+    
 </script>
 {% endblock %}

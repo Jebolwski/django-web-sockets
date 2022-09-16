@@ -11,6 +11,12 @@
                 </div>
             </div>
             <div class="col-auto">
+                <a href="{% url 'add-chat' %}" class="d-flex align-items-center text-decoration-none">
+                    <i class="fa-solid fa-comment-medical fa-lg ps-2 text-primary"></i>
+                    <p class="ms-2 fw-bold">Add a chat</p>
+                </a>
+            </div>
+            <div class="col-auto">
                 <a href="{% url 'logout' %}" class="text-primary">
                     <i class="fa-solid fa-arrow-right-from-bracket fa-lg" title="Logout"></i>
                 </a>
@@ -18,84 +24,21 @@
         </div>
     </div>
     <div class="shadow rounded-3 p-3 friends">
-        <div class="friends__friend" onclick="to_chat()">
-                <div class="row align-items-center">
+        {% for room in rooms %}
+            <div class="friends__friend">
+                <a href="{% url 'lobby' room.id %}" class="row align-items-center text-dark text-decoration-none">
                     <div class="col">
                         <div class="d-flex align-items-center">
-                            <img src="https://s.yimg.com/ny/api/res/1.2/GC1RSc6bSuuFutkw2AVceg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQ1Mg--/https://s.yimg.com/uu/api/res/1.2/QowPP1GDV0o1o6OLUpkmhg--~B/aD00NDU7dz02MzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/fr/article.rmcsport.com/0e87a70545da7e6acd2bb7210ee96b2c" alt="profile_picture" title="Profile pic" />
-                            <h6>Mert Gökmen</h6>
+                            <img src="{{room.room_photo.url}}" alt="profile_picture" title="Profile pic" />
+                            <h5>{{room.room_name}}</h5>
                         </div>
                     </div>
                     <div class="col-auto">
                         <i class="fa-solid fa-chevron-right" title="Chat"></i>
                     </div>
-                </div>
-        </div>
-        <div class="friends__friend" onclick="to_chat()">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="d-flex align-items-center">
-                            <img src="https://s.yimg.com/ny/api/res/1.2/GC1RSc6bSuuFutkw2AVceg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQ1Mg--/https://s.yimg.com/uu/api/res/1.2/QowPP1GDV0o1o6OLUpkmhg--~B/aD00NDU7dz02MzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/fr/article.rmcsport.com/0e87a70545da7e6acd2bb7210ee96b2c" alt="profile_picture" title="Profile pic" />
-                            <h6>Mert Gökmen</h6>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fa-solid fa-chevron-right" title="Chat"></i>
-                    </div>
-                </div>
-        </div>
-        <div class="friends__friend" onclick="to_chat()">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="d-flex align-items-center">
-                            <img src="https://s.yimg.com/ny/api/res/1.2/GC1RSc6bSuuFutkw2AVceg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQ1Mg--/https://s.yimg.com/uu/api/res/1.2/QowPP1GDV0o1o6OLUpkmhg--~B/aD00NDU7dz02MzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/fr/article.rmcsport.com/0e87a70545da7e6acd2bb7210ee96b2c" alt="profile_picture" title="Profile pic" />
-                            <h6>Mert Gökmen</h6>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fa-solid fa-chevron-right" title="Chat"></i>
-                    </div>
-                </div>
-        </div>
-        <div class="friends__friend" onclick="to_chat()">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="d-flex align-items-center">
-                            <img src="https://s.yimg.com/ny/api/res/1.2/GC1RSc6bSuuFutkw2AVceg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQ1Mg--/https://s.yimg.com/uu/api/res/1.2/QowPP1GDV0o1o6OLUpkmhg--~B/aD00NDU7dz02MzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/fr/article.rmcsport.com/0e87a70545da7e6acd2bb7210ee96b2c" alt="profile_picture" title="Profile pic" />
-                            <h6>Mert Gökmen</h6>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fa-solid fa-chevron-right" title="Chat"></i>
-                    </div>
-                </div>
-        </div>
-        <div class="friends__friend" onclick="to_chat()">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="d-flex align-items-center">
-                            <img src="https://s.yimg.com/ny/api/res/1.2/GC1RSc6bSuuFutkw2AVceg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQ1Mg--/https://s.yimg.com/uu/api/res/1.2/QowPP1GDV0o1o6OLUpkmhg--~B/aD00NDU7dz02MzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/fr/article.rmcsport.com/0e87a70545da7e6acd2bb7210ee96b2c" alt="profile_picture" title="Profile pic" />
-                            <h6>Mert Gökmen</h6>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fa-solid fa-chevron-right" title="Chat"></i>
-                    </div>
-                </div>
-        </div>
-        <div class="friends__friend" onclick="to_chat()">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="d-flex align-items-center">
-                            <img src="https://s.yimg.com/ny/api/res/1.2/GC1RSc6bSuuFutkw2AVceg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQ1Mg--/https://s.yimg.com/uu/api/res/1.2/QowPP1GDV0o1o6OLUpkmhg--~B/aD00NDU7dz02MzA7YXBwaWQ9eXRhY2h5b24-/https://media.zenfs.com/fr/article.rmcsport.com/0e87a70545da7e6acd2bb7210ee96b2c" alt="profile_picture" title="Profile pic" />
-                            <h6>Mert Gökmen</h6>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fa-solid fa-chevron-right" title="Chat"></i>
-                    </div>
-                </div>
-        </div>
+                </a>
+            </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

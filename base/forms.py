@@ -15,3 +15,9 @@ class RegisterForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         for fields in self.fields:
             self.fields[fields].widget.attrs.update({'class':'form-control'})
+
+class ChatAddForm(forms.ModelForm):
+    
+    class Meta:
+        model = Room
+        fields = ['room_name','room_photo']

@@ -15,7 +15,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'channels',
-
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -93,20 +93,26 @@ CHANNEL_LAYERS = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Istanbul'
+
 
 USE_I18N = True
+
 
 USE_TZ = True
 
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 
 STATIC_ROOT= os.path.join(BASE_DIR,'staticfiles')
+
 
 STATIC_URL = '/static/'
 
 
 MEDIA_ROOT = 'media/'
+
 
 MEDIA_URL = 'media/'
 

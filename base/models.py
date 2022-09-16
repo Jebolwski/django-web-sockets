@@ -1,6 +1,7 @@
 from distutils.command.upload import upload
 from django.db import models
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 # Create your models here.
 class Profile(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=False,blank=False)
@@ -13,11 +14,18 @@ class Profile(models.Model):
 
 
 class Room(models.Model):
-    room_name = models.SlugField(null=False,blank=False,max_length=100)
+    room_name = models.CharField(null=False,blank=False,max_length=100,verbose_name="Room Name")
+    room_photo = models.ImageField(null=False,blank=False,default='room_pics/default_room_pic.png',upload_to='room_pics',verbose_name="Room Photo")
     profiles = models.ManyToManyField(Profile)
 
     def __str__(self):
         return self.room_name
+
+    def RoomSecurity(self,request):
+        if request.user.is_anonymous or get_object_or_404(Profile,user=request.user) not in self.profiles.all():
+            return False
+        else:
+            return True
 
 
 class Message(models.Model):

@@ -2,15 +2,25 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages
-from django.shortcuts import redirect
+from django.shortcuts import redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
-from base.forms import RegisterForm
-from base.models import Profile
+from base.forms import ChatAddForm, RegisterForm
+from base.models import Message, Profile, Room
+from django.http import HttpResponse
 
 @login_required(login_url='/login/')
 def Home(request):
-    return render(request,"base/index.html")
+    profile = get_object_or_404(Profile,user=request.user)
+    rooms_all = Room.objects.all()
+    rooms = []
+    for i in rooms_all:
+        if profile in i.profiles.all():
+            rooms.append(i)
+    context = {
+        'rooms':rooms
+    }
+    return render(request,"base/index.html",context)
 
 
 def Login(request):
@@ -40,14 +50,50 @@ def Login(request):
 
 
 @login_required(login_url='/login/')
-def Lobby(request,room_name):
-    return render(request,"base/lobby.html")
+def Lobby(request,room_id):
+    room = get_object_or_404(Room,id=room_id)
+    if not room.RoomSecurity(request):
+        return render(request,"base/404.html")
+    room_messages = Message.objects.filter(room=room)
+    context={
+        'room':room,
+        'room_messages':room_messages
+    }
+    return render(request,"base/lobby.html",context)
 
+@login_required(login_url='/login/')
+def AddChat(request):
+    form = ChatAddForm()
+    if request.method=="POST":
+        form = ChatAddForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("home")
+        else:
+            print("non valid")
+    context = {
+        'form':form
+    }
+    return render(request,"base/add-chat.html",context)
 
 @login_required(login_url='/login/')
 def Logout(request):
     logout(request)
     return redirect("home")
+
+
+@login_required(login_url='/login/')
+def SendMessage(request):
+    room_id = request.POST.get('room_id')
+    text = request.POST.get('text')
+
+    Message.objects.create(
+        profile = get_object_or_404(Profile,user=request.user),
+        room = get_object_or_404(Room,id=room_id),
+        text = text,
+    )
+
+    return HttpResponse("messi")
 
 
 def Register(request):

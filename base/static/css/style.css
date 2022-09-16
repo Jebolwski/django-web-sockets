@@ -9,6 +9,63 @@
   color: #5b9cff !important;
 }
 
+* .btn-primary {
+  color: #fff !important;
+  background-color: #5b9cff !important;
+  border-color: #5b8dff !important;
+}
+
+* .btn-primary:hover {
+  border-color: #5b8dff !important;
+  background-color: #4b90f7 !important;
+}
+
+* .btn-secondary {
+  color: #fff !important;
+  background-color: #a8a8a8 !important;
+  border-color: #a7a7a7 !important;
+}
+
+* .btn-secondary:hover {
+  border-color: #858585 !important;
+  background-color: #8b8b8b !important;
+}
+
+* .btn-success {
+  color: #fff !important;
+  background-color: #9af764 !important;
+  border-color: #92fa56 !important;
+}
+
+* .btn-success:hover {
+  border-color: #60bd65 !important;
+  background-color: #60bd65 !important;
+}
+
+* .btn {
+  display: inline-block;
+  font-weight: 600;
+  line-height: 1.5;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+      user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border-radius: 9999px;
+  -webkit-transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+}
+
 p {
   padding: 0 !important;
   margin: 0 !important;
@@ -34,8 +91,8 @@ p {
 }
 
 .friends .friends__friend img {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   margin-right: 10px;
   border-radius: 50%;
   -webkit-box-shadow: 0 0 10px 1px #d5f8f8;
@@ -43,14 +100,13 @@ p {
 }
 
 .friends .friends__friend:hover {
-  background-color: rgba(194, 244, 253, 0.2);
+  width: 100%;
+  background-color: rgba(159, 241, 255, 0.2);
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
 
 .friends .friends__friend:hover img {
-  width: 40px;
-  height: 40px;
   margin-right: 10px;
   border-radius: 50%;
   -webkit-box-shadow: 0 0 10px 1px #d5f8f8;
@@ -68,7 +124,7 @@ p {
   margin-bottom: 20px;
   padding: 10px;
   background-color: rgba(194, 220, 253, 0.2);
-  max-width: 50%;
+  max-width: 65%;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
