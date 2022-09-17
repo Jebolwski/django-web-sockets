@@ -11,6 +11,7 @@ urlpatterns = [
     path("register/",views.Register,name="register"),
     path("send-message/",views.SendMessage,name="send-message"),
     path("add-chat/",views.AddChat,name="add-chat"),
+    path("edit-chat/<int:pk>/",views.EditChat,name="edit-chat"),
 
 
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

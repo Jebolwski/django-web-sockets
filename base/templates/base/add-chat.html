@@ -1,23 +1,45 @@
-{% extends "base/base.html" %} 
-{% block title %}Add Chat{% endblock title %}
-{% load crispy_forms_tags %} 
-{% block content %}
+{% extends "base/base.html" %} {% block title %}Add Chat{% endblock title %} {% load crispy_forms_tags %} {% block content %}
 <div class="container-fluid container-md mt-5">
-    <div class="shadow rounded-3 p-3">
-        <h4 class="text-center">Add Chat</h4>
-        <form method="post">
-            {% csrf_token %}
-            {{form|crispy}}
-            <div class="text-center mt-4">
-                <input type="submit" value="Add Chat" class="btn btn-success">
-            </div>
-        </form>
-    </div>
+  <div class="shadow rounded-3 p-3">
+    <h4 class="text-center">Add Chat</h4>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %} {{form|crispy}}
+      <label for="id_profiles" class="requiredField mt-4">
+        Users in the chat<span class="asteriskField">*</span>
+      </label>
+      <select
+        name="profiles"
+        class="selectmultiple form-control"
+        id="id_profiles"
+        multiple=""
+      >
+        {% for profile in profiles %}
+        <option value="{{profile.id}}">{{profile.user.username}}</option>
+        {% endfor %}
+      </select>
+      <label for="id_admins" class="requiredField mt-4">
+        Admins of the chat<span class="asteriskField">*</span>
+      </label>
+      <select
+        name="admins"
+        class="selectmultiple form-control"
+        id="id_admins"
+        multiple=""
+      >
+        {% for profile in profiles %}
+        <option value="{{profile.id}}">{{profile.user.username}}</option>
+        {% endfor %}
+      </select>
+
+      <div class="text-center mt-4">
+        <input type="submit" value="Add Chat" class="btn btn-success" />
+      </div>
+    </form>
+  </div>
 </div>
-{% endblock content %}
-{% block script %}
+{% endblock content %} {% block script %}
 <script>
-    $("#id_room_photo").addClass("form-control")
-    $(".requiredField").addClass("mt-4")
+  $("#id_room_photo").addClass("form-control");
+  $(".requiredField").addClass("mt-4");
 </script>
 {% endblock %}

@@ -34,7 +34,13 @@
     ></script>
   </head>
   <body>
+    {% for message in messages %}
+      {{message|safe}}
+    {% endfor %}
     {% block content %} {% endblock %}
     {% block script %} {% endblock %}
+    <script>
+      $(".message").delay(3000).fadeOut(1000)
+    </script>
   </body>
 </html>

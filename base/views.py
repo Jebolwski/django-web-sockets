@@ -8,6 +8,7 @@ from django.utils.text import slugify
 from base.forms import ChatAddForm, RegisterForm
 from base.models import Message, Profile, Room
 from django.http import HttpResponse
+from django.contrib import messages
 
 @login_required(login_url='/login/')
 def Home(request):
@@ -43,7 +44,7 @@ def Login(request):
 
         if person is not None:
             login(request, person)
-            messages.success(request, 'Başarıyla giriş yapıldı.')
+            messages.success(request,'<div class="message btn btn-success position-fixed me-3 mb-3 end-0 bottom-0">Logged in successfully.</div>')
             return redirect("home")
 
     return render(request,"base/login.html")
@@ -61,24 +62,102 @@ def Lobby(request,room_id):
     }
     return render(request,"base/lobby.html",context)
 
+
 @login_required(login_url='/login/')
 def AddChat(request):
     form = ChatAddForm()
+    profiles = []
+    rooms_all = Room.objects.all()
+    user_profile = get_object_or_404(Profile,user=request.user)
+    rooms = []
+    for i in rooms_all:
+        if user_profile in i.profiles.all():
+            rooms.append(i)
+
+    for i in rooms:
+        for profile in i.profiles.all():
+            if profile not in profiles:
+                profiles.append(profile)
+
+    profiles.remove(user_profile)
+
     if request.method=="POST":
-        form = ChatAddForm(request.POST)
+        form = ChatAddForm(request.POST,files=request.FILES)
         if form.is_valid():
-            form.save()
+            obj = form.save(commit=False)
+            obj.save()
+            obj.profiles.add(get_object_or_404(Profile,user=request.user))
+            obj.room_admins.add(get_object_or_404(Profile,user=request.user))
+            if request.POST.get('profiles'):
+                for i in request.POST.get('profiles'):
+                    obj.profiles.add(get_object_or_404(Profile,id=i))
+            if request.POST.get('admins'):
+                for i in request.POST.get('admins'):
+                    obj.room_admins.add(get_object_or_404(Profile,id=i))
+            form.save_m2m()
+            messages.success(request,'<div class="message btn btn-success position-fixed me-3 mb-3 end-0 bottom-0">Added a new chat successfully.</div>')
             return redirect("home")
-        else:
-            print("non valid")
     context = {
-        'form':form
+        'form':form,
+        'profiles':profiles
     }
     return render(request,"base/add-chat.html",context)
+
+
+@login_required(login_url='/login/')
+def EditChat(request,pk):
+    room = get_object_or_404(Room,id=pk)
+    rooms_profiles = room.profiles.all()
+    rooms_admins = room.room_admins.all()
+    form = ChatAddForm(instance=room)
+    profiles = []
+    rooms_all = Room.objects.all()
+    user_profile = get_object_or_404(Profile,user=request.user)
+    rooms = []
+    for i in rooms_all:
+        if user_profile in i.profiles.all():
+            rooms.append(i)
+
+    for i in rooms:
+        for profile in i.profiles.all():
+            if profile not in profiles:
+                profiles.append(profile)
+
+    profiles.remove(user_profile)
+
+    if request.method=="POST":
+        form = ChatAddForm(data=request.POST,files=request.FILES,instance=room)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.save()
+            if request.POST.get('profiles'):
+                for i in request.POST.get('profiles'):
+                    obj.profiles.add(get_object_or_404(Profile,id=i))
+            
+            
+            if request.POST.get('admins'):
+                for i in request.POST.get('admins'):
+                    obj.room_admins.add(get_object_or_404(Profile,id=i))
+
+
+            obj.profiles.add(get_object_or_404(Profile,user=request.user))
+            obj.room_admins.add(get_object_or_404(Profile,user=request.user))
+            form.save_m2m()
+            messages.success(request,'<div class="message btn btn-success position-fixed me-3 mb-3 end-0 bottom-0">Chat successfully updated.</div>')
+            return redirect("home")
+    context = {
+        'form':form,
+        'profiles':profiles,
+        'rooms_profiles':rooms_profiles,
+        'rooms_admins':rooms_admins,
+    }
+    return render(request,"base/edit-chat.html",context)
+
 
 @login_required(login_url='/login/')
 def Logout(request):
     logout(request)
+    messages.success(request,'<div class="message btn btn-success position-fixed me-3 mb-3 end-0 bottom-0">Başarıyla çıkış yapıldı.</div>')
     return redirect("home")
 
 
@@ -100,14 +179,7 @@ def Register(request):
     if request.user.is_authenticated:
         return redirect("home")
     form = RegisterForm()
-    if request.method == 'POST': 
-        dizi=[]
-        for i in User.objects.all():
-            dizi.append(i.email)
-        if request.POST['email'] in dizi:
-            messages.error(request, 'Girdiğiniz email kullanımda.')
-            return redirect('register')
-
+    
     if request.method == 'POST': 
         dizi1=[]
         for i in User.objects.all():
@@ -120,7 +192,7 @@ def Register(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Başarıyla kayıt olundu.')
+            messages.success(request,'<div class="message btn btn-success position-fixed me-3 mb-3 end-0 bottom-0">Registered successfully.</div>')
             Profile.objects.update_or_create(
                 user=User.objects.get(username = request.POST['username']),
                 bio=None,
@@ -129,7 +201,7 @@ def Register(request):
             )
             return redirect('login')
         else:
-            messages.error(request, "Kayıt başarı ile gerçekleştirilemedi.")
+            messages.error(request, '<div class="message btn btn-danger position-fixed me-3 mb-3 end-0 bottom-0">Couldnt register successfully.</div>')
 
     context = {
         'form': form,

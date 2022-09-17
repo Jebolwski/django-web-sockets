@@ -2,23 +2,23 @@
 {% block title %}Lobby{% endblock title %} 
 {% block content %}
 <div class="container mt-4">
-    <div class="shadow rounded-3 p-3 mb-3 d-flex align-items-center">  
+    <div class="shadow rounded-3 px-1 py-2 mb-3 d-flex align-items-center">  
         <div class="row justify-content-between" style="width: 100%">
             <div class="col-auto">
                 <div class="d-flex align-items-center">
-                    <i class="fa-solid fa-comments fa-lg ps-2 text-primary"></i>
+                    <i class="fa-solid fa-comments ps-2 text-primary"></i>
                     <p class="ms-3 fw-bold">{{request.user.username}}</p>
                 </div>
             </div>
             <div class="col-auto">
                 <a href="{% url 'add-chat' %}" class="d-flex align-items-center text-decoration-none">
-                    <i class="fa-solid fa-comment-medical fa-lg ps-2 text-primary"></i>
-                    <p class="ms-2 fw-bold">Add a chat</p>
+                    <i class="fa-solid fa-comment-medical ps-2 text-primary"></i>
+                    <p class="ms-2">Add a chat</p>
                 </a>
             </div>
             <div class="col-auto">
                 <a href="{% url 'logout' %}" class="text-primary">
-                    <i class="fa-solid fa-arrow-right-from-bracket fa-lg" title="Logout"></i>
+                    <i class="fa-solid fa-arrow-right-from-bracket" title="Logout"></i>
                 </a>
             </div>
         </div>

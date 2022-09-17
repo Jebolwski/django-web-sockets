@@ -32,6 +32,15 @@
       background-color: #60bd65!important;
     }
   }
+  .btn-danger {
+    color: #fff !important;
+    background-color: #ff3d3d !important;
+    border-color: #ff3d1e !important;
+    &:hover{
+      border-color: #c03030 !important;
+      background-color: #c03030 !important;
+    }
+  }
   .btn {
     display: inline-block;
     font-weight: 600;
@@ -149,6 +158,5 @@ p{
 }
 
 .category{
-  height: 10vh;
   margin: 2vh 0;
 }

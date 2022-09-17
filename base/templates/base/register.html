@@ -58,3 +58,26 @@
     </div>
 </div>
 {% endblock content %}
+{% block script %}
+<script>
+    $(document).ready(function() {
+            $('[data-toggle="popover"').popover({
+                content: `● Parolanız en az 8 karakter içermek zorundadır. <br /><br /> ● Parolanız yaygın olarak kullanılan bir parola olamaz. <br /><br /> ● Parolanız tamamıyla sayısal olamaz.`,
+                animation: true,
+                placement: "right",
+                trigger: 'hover',
+                html:true
+            });
+        });
+
+    $(document).ready(function() {
+          $('[data-toggle="popover1"').popover({
+              content: `● Doğrulama için önceki gibi aynı parolayı girin.`,
+              animation: true,
+              trigger: 'hover',
+              placement: "right",
+          });
+      });
+
+</script>
+{% endblock script %}

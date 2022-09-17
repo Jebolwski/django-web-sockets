@@ -15,8 +15,9 @@ class Profile(models.Model):
 
 class Room(models.Model):
     room_name = models.CharField(null=False,blank=False,max_length=100,verbose_name="Room Name")
+    room_admins = models.ManyToManyField(Profile,verbose_name="Rooms admins",related_name="Admins")
     room_photo = models.ImageField(null=False,blank=False,default='room_pics/default_room_pic.png',upload_to='room_pics',verbose_name="Room Photo")
-    profiles = models.ManyToManyField(Profile)
+    profiles = models.ManyToManyField(Profile,related_name="Members")
 
     def __str__(self):
         return self.room_name
