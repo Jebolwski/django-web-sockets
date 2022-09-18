@@ -29,6 +29,7 @@
               id="id_admins"
               multiple=""
             >
+            
               {% for profile in profiles %}
                 {% if profile in rooms_admins %}
                     <option value="{{profile.id}}" selected>{{profile.user.username}}</option> 

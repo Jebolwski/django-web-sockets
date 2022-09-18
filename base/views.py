@@ -1,3 +1,4 @@
+from urllib import response
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login,logout
@@ -9,6 +10,9 @@ from base.forms import ChatAddForm, RegisterForm
 from base.models import Message, Profile, Room
 from django.http import HttpResponse
 from django.contrib import messages
+import json
+from django.core import serializers
+from django.http import HttpResponse
 
 @login_required(login_url='/login/')
 def Home(request):
@@ -114,12 +118,20 @@ def EditChat(request,pk):
     rooms_all = Room.objects.all()
     user_profile = get_object_or_404(Profile,user=request.user)
     rooms = []
+    
     for i in rooms_all:
         if user_profile in i.profiles.all():
-            rooms.append(i)
+            if i not in rooms:
+                rooms.append(i)
+        if user_profile in i.room_admins.all():
+            if i not in rooms:
+                rooms.append(i)
 
     for i in rooms:
         for profile in i.profiles.all():
+            if profile not in profiles:
+                profiles.append(profile)
+        for profile in i.room_admins.all():
             if profile not in profiles:
                 profiles.append(profile)
 
@@ -127,23 +139,13 @@ def EditChat(request,pk):
 
     if request.method=="POST":
         form = ChatAddForm(data=request.POST,files=request.FILES,instance=room)
+        print(request.POST)
         if form.is_valid():
             obj = form.save(commit=False)
             obj.save()
-            if request.POST.get('profiles'):
-                for i in request.POST.get('profiles'):
-                    obj.profiles.add(get_object_or_404(Profile,id=i))
-            
-            
-            if request.POST.get('admins'):
-                for i in request.POST.get('admins'):
-                    obj.room_admins.add(get_object_or_404(Profile,id=i))
-
-
-            obj.profiles.add(get_object_or_404(Profile,user=request.user))
-            obj.room_admins.add(get_object_or_404(Profile,user=request.user))
+            room = get_object_or_404(Room, id=obj.id)
             form.save_m2m()
-            messages.success(request,'<div class="message btn btn-success position-fixed me-3 mb-3 end-0 bottom-0">Chat successfully updated.</div>')
+            messages.success(request,'<div class="message btn btn-success position-fixed me-3 mb-3 end-0 bottom-0">'+ request.POST.get('room_name') +' successfully updated.</div>')
             return redirect("home")
     context = {
         'form':form,
@@ -207,3 +209,27 @@ def Register(request):
         'form': form,
     }
     return render(request, 'base/register.html', context)
+
+@login_required(login_url='/login/')
+def AddFriend(request):
+    return render(request,"base/add-friend.html")
+
+
+@login_required(login_url='/login/')
+def AddFriendFetch(request):
+    text = request.POST.get('text').lower()
+    profiles = []
+    if text!=None:
+        for i in Profile.objects.all():
+            print(i.user.username.lower(),i.profile_code.lower())
+            if text in  i.user.username.lower():
+                if i not in profiles:
+                    profiles.append(i)
+            if text in  i.profile_code.lower():
+                if i not in profiles:
+                    profiles.append(i)
+    dizi = []
+    for i in profiles:
+        dizi.append({'username':i.user.username,'id':i.id})
+    
+    return HttpResponse(json.dumps(dizi))  

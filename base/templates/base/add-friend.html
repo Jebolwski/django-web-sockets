@@ -1,0 +1,39 @@
+{% extends "base/base.html" %} 
+{% block title %}Add Friend{% endblock title %} 
+{% block content %}
+<div class="container mt-4">
+    <div class="shadow rounded-3 p-3">
+        <label for="search">Users Code / Username</label>
+        <input type="text" id="search" class="search form-control">
+    </div>
+
+    <div class="users bg-white shadow-lg rounded-3 p-4 mt-5">
+        <h5 class="text-center fw-light">Seach for users</h5>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    $(".search").keypress(async function(){
+        
+        let form_data = new FormData();
+        form_data.append('text', $(".search").val());
+        form_data.append('csrfmiddlewaretoken', "{{csrf_token}}");
+        let response = await fetch(window.location.origin+"/add-friend-fetch/",{
+            method: "POST",
+            credentials: 'same-origin',
+            headers: { "X-CSRFToken": "{{csrf_token}}" },
+            body: form_data
+        })
+        if(response.status==200){
+            $(".users").html("")
+            let data = await response.json();
+            for(i in data){
+                $(".users").append(`
+                    <p>${data[i].username}</p>
+                `)
+            }
+        }
+    })
+</script>
+{% endblock %}
