@@ -2,7 +2,23 @@
 {% block title %}Lobby{% endblock title %} 
 {% block content %}
 <div class="container mt-4">
-    <div class="shadow rounded-3 px-1 py-2 mb-3 d-flex align-items-center">  
+    <div class="shadow rounded-3 p-3">
+        <form method="post">
+            {% csrf_token %}
+            <label for="search">Users Code</label>
+            <div class="row align-items-center">
+            <div class="col">
+                <input type="search" id="search" placeholder="Search for a user..." name="search_text" required class="search form-control">
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-outline-dark">
+                    <i class="fa-solid fa-search"></i>
+                </button>
+            </div>
+            </div>
+        </form>
+    </div>
+    <div class="shadow rounded-3 px-1 py-2 my-3 d-flex align-items-center">  
         <div class="row justify-content-between" style="width: 100%">
             <div class="col-auto">
                 <div class="d-flex align-items-center">
@@ -14,12 +30,6 @@
                 <a href="{% url 'add-chat' %}" class="d-flex align-items-center text-decoration-none">
                     <i class="fa-solid fa-comment-medical ps-2 text-primary"></i>
                     <p class="ms-2">Add a chat</p>
-                </a>
-            </div>
-            <div class="col-auto">
-                <a href="{% url 'add-friend' %}" class="d-flex align-items-center text-decoration-none">
-                    <i class="fa-solid fa-user-plus ps-2 text-primary"></i>
-                    <p class="ms-2">Add a friend</p>
                 </a>
             </div>
             <div class="col-auto">

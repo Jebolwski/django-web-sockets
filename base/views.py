@@ -16,14 +16,21 @@ from django.http import HttpResponse
 
 @login_required(login_url='/login/')
 def Home(request):
+    
     profile = get_object_or_404(Profile,user=request.user)
     rooms_all = Room.objects.all()
     rooms = []
     for i in rooms_all:
         if profile in i.profiles.all():
             rooms.append(i)
+
+
+    if request.method=="POST":
+        print(request.POST.get('search_text'))
+        return redirect('add-friend',request.POST.get('search_text'))
+
     context = {
-        'rooms':rooms
+        'rooms':rooms,
     }
     return render(request,"base/index.html",context)
 
@@ -88,22 +95,15 @@ def AddChat(request):
     if request.method=="POST":
         form = ChatAddForm(request.POST,files=request.FILES)
         if form.is_valid():
-            obj = form.save(commit=False)
-            obj.save()
-            obj.profiles.add(get_object_or_404(Profile,user=request.user))
-            obj.room_admins.add(get_object_or_404(Profile,user=request.user))
-            if request.POST.get('profiles'):
-                for i in request.POST.get('profiles'):
-                    obj.profiles.add(get_object_or_404(Profile,id=i))
-            if request.POST.get('admins'):
-                for i in request.POST.get('admins'):
-                    obj.room_admins.add(get_object_or_404(Profile,id=i))
+            form.save()
             form.save_m2m()
             messages.success(request,'<div class="message btn btn-success position-fixed me-3 mb-3 end-0 bottom-0">Added a new chat successfully.</div>')
             return redirect("home")
+        else:
+            print("non-valid")
     context = {
         'form':form,
-        'profiles':profiles
+        'user_profile':user_profile
     }
     return render(request,"base/add-chat.html",context)
 
@@ -127,32 +127,26 @@ def EditChat(request,pk):
             if i not in rooms:
                 rooms.append(i)
 
-    for i in rooms:
-        for profile in i.profiles.all():
-            if profile not in profiles:
-                profiles.append(profile)
-        for profile in i.room_admins.all():
-            if profile not in profiles:
-                profiles.append(profile)
-
+    for i in room.profiles.all():
+        profiles.append(i)
     profiles.remove(user_profile)
 
     if request.method=="POST":
         form = ChatAddForm(data=request.POST,files=request.FILES,instance=room)
-        print(request.POST)
         if form.is_valid():
-            obj = form.save(commit=False)
-            obj.save()
-            room = get_object_or_404(Room, id=obj.id)
+            form.save()
             form.save_m2m()
             messages.success(request,'<div class="message btn btn-success position-fixed me-3 mb-3 end-0 bottom-0">'+ request.POST.get('room_name') +' successfully updated.</div>')
-            return redirect("home")
+            return redirect("edit-chat",room.id)
+    
     context = {
         'form':form,
         'profiles':profiles,
         'rooms_profiles':rooms_profiles,
-        'rooms_admins':rooms_admins,
+        'user_profile':user_profile,
+        'room':room
     }
+    
     return render(request,"base/edit-chat.html",context)
 
 
@@ -211,25 +205,44 @@ def Register(request):
     return render(request, 'base/register.html', context)
 
 @login_required(login_url='/login/')
-def AddFriend(request):
-    return render(request,"base/add-friend.html")
+def AddFriend(request,text):
+    user_profile = Profile.objects.get(user=request.user)
+    search_profiles = Profile.objects.filter(profile_code__icontains=text)
+    if request.method=="POST":
+        return redirect('add-friend',request.POST.get('search_text'))
+
+    context = {
+        'profiles' : search_profiles,
+        'user_profile' : user_profile
+    }
+    return render(request,"base/add-friend.html",context)
 
 
-@login_required(login_url='/login/')
-def AddFriendFetch(request):
-    text = request.POST.get('text').lower()
-    profiles = []
-    if text!=None:
-        for i in Profile.objects.all():
-            print(i.user.username.lower(),i.profile_code.lower())
-            if text in  i.user.username.lower():
-                if i not in profiles:
-                    profiles.append(i)
-            if text in  i.profile_code.lower():
-                if i not in profiles:
-                    profiles.append(i)
-    dizi = []
-    for i in profiles:
-        dizi.append({'username':i.user.username,'id':i.id})
+def AddRemoveFriend(request,pk):
+    user_profile = Profile.objects.get(user=request.user)
+    profile = get_object_or_404(Profile,id=pk)
+    if profile in user_profile.friends.all():
+        user_profile.friends.remove(get_object_or_404(Profile,id=pk))
+    else:
+        user_profile.friends.add(get_object_or_404(Profile,id=pk))
+    print(profile)
+    return redirect("add-friend",profile.profile_code)
+
+# @login_required(login_url='/login/')
+# def AddFriendFetch(request):
+#     text = request.POST.get('text').lower()
+#     profiles = []
+#     if text!=None:
+#         for i in Profile.objects.all():
+#             print(i.user.username.lower(),i.profile_code.lower())
+#             if text in  i.user.username.lower():
+#                 if i not in profiles:
+#                     profiles.append(i)
+#             if text in  i.profile_code.lower():
+#                 if i not in profiles:
+#                     profiles.append(i)
+#     dizi = []
+#     for i in profiles:
+#         dizi.append({'username':i.user.username,'id':i.id})
     
-    return HttpResponse(json.dumps(dizi))  
+#     return HttpResponse(json.dumps(dizi))  

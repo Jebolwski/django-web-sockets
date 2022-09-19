@@ -2,38 +2,70 @@
 {% block title %}Add Friend{% endblock title %} 
 {% block content %}
 <div class="container mt-4">
-    <div class="shadow rounded-3 p-3">
-        <label for="search">Users Code / Username</label>
-        <input type="text" id="search" class="search form-control">
+    <div class="shadow rounded-3 px-1 py-2 my-3 d-flex align-items-center">  
+        <div class="row justify-content-between" style="width: 100%">
+            <div class="col-auto">
+                <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-comments ps-2 text-primary"></i>
+                    <p class="ms-3 fw-bold">{{request.user.username}}</p>
+                </div>
+            </div>
+            <div class="col-auto">
+                <a href="{% url 'home' %}" class="d-flex align-items-center text-decoration-none">
+                    <i class="fa-solid fa-person-booth"></i>
+                    <p class="ms-2">Rooms</p>
+                </a>
+            </div>
+            <div class="col-auto">
+                <a href="{% url 'logout' %}" class="text-primary">
+                    <i class="fa-solid fa-arrow-right-from-bracket" title="Logout"></i>
+                </a>
+            </div>
+        </div>
     </div>
-
+    <div class="shadow rounded-3 p-3">
+        <form method="post">
+            {% csrf_token %}
+            <label for="search">Users Code</label>
+            <div class="row align-items-center">
+            <div class="col">
+                <input type="search" id="search" placeholder="Search for a user..." name="search_text" required class="search form-control">
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-outline-dark">
+                    <i class="fa-solid fa-search"></i>
+                </button>
+            </div>
+            </div>
+        </form>
+    </div>
+    {{user_profile.}}
     <div class="users bg-white shadow-lg rounded-3 p-4 mt-5">
-        <h5 class="text-center fw-light">Seach for users</h5>
+        {% if profiles %}
+            {% for profile in profiles %}
+            <div class="row align-items-center">
+                <div class="col">
+                    <h5>{{profile.user.username}}</h5>
+                </div>
+                <div class="col-auto">
+                    {% if profile in user_profile.friends.all %}
+                            <a href="{% url 'add-remove-friend' profile.id %}">
+                                <i class="fa-solid fa-xmark fa-lg text-danger" title="Add friend"></i>
+                            </a>
+                        {% else %}
+                            <a href="{% url 'add-remove-friend' profile.id %}">
+                                <i class="fa-solid fa-check fa-lg text-success" title="Remove friend"></i>
+                            </a>
+                    {% endif %}
+                </div>
+                <div class="col-auto">
+
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <h5 class="text-center">Not any profiles were found.</h5>
+        {% endif %}
     </div>
 </div>
-{% endblock %}
-{% block script %}
-<script>
-    $(".search").keypress(async function(){
-        
-        let form_data = new FormData();
-        form_data.append('text', $(".search").val());
-        form_data.append('csrfmiddlewaretoken', "{{csrf_token}}");
-        let response = await fetch(window.location.origin+"/add-friend-fetch/",{
-            method: "POST",
-            credentials: 'same-origin',
-            headers: { "X-CSRFToken": "{{csrf_token}}" },
-            body: form_data
-        })
-        if(response.status==200){
-            $(".users").html("")
-            let data = await response.json();
-            for(i in data){
-                $(".users").append(`
-                    <p>${data[i].username}</p>
-                `)
-            }
-        }
-    })
-</script>
 {% endblock %}

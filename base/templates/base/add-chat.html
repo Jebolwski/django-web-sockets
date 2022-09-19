@@ -13,24 +13,10 @@
         id="id_profiles"
         multiple=""
       >
-        {% for profile in profiles %}
-        <option value="{{profile.id}}">{{profile.user.username}}</option>
+        {% for profile in user_profile.friends.all %}
+          <option value="{{profile.id}}">{{profile.user.username}}</option>
         {% endfor %}
       </select>
-      <label for="id_admins" class="requiredField mt-4">
-        Admins of the chat<span class="asteriskField">*</span>
-      </label>
-      <select
-        name="admins"
-        class="selectmultiple form-control"
-        id="id_admins"
-        multiple=""
-      >
-        {% for profile in profiles %}
-        <option value="{{profile.id}}">{{profile.user.username}}</option>
-        {% endfor %}
-      </select>
-
       <div class="text-center mt-4">
         <input type="submit" value="Add Chat" class="btn btn-success" />
       </div>
@@ -41,5 +27,7 @@
 <script>
   $("#id_room_photo").addClass("form-control");
   $(".requiredField").addClass("mt-4");
+  $("#div_id_profiles").remove();
+  $("#div_id_room_admins").remove();
 </script>
 {% endblock %}

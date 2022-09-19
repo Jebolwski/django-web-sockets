@@ -12,8 +12,8 @@ urlpatterns = [
     path("send-message/",views.SendMessage,name="send-message"),
     path("add-chat/",views.AddChat,name="add-chat"),
     path("edit-chat/<int:pk>/",views.EditChat,name="edit-chat"),
-    path("add-friend/",views.AddFriend,name="add-friend"),
-    path("add-friend-fetch/",views.AddFriendFetch,name="add-friend-fetch"),
+    path("add-friend/<str:text>",views.AddFriend,name="add-friend"),
+    path("add-remove-friend/<int:pk>",views.AddRemoveFriend,name="add-remove-friend"),
 
 
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

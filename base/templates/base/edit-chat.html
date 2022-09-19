@@ -12,7 +12,7 @@
                 Users in the chat<span class="asteriskField">*</span> 
             </label>
             <select name="profiles" class="selectmultiple form-control"  id="id_profiles" multiple=""> 
-                {% for profile in profiles %}
+                {% for profile in user_profile.friends.all %}
                     {% if profile in rooms_profiles %}
                         <option value="{{profile.id}}" selected>{{profile.user.username}}</option> 
                     {% else %}
@@ -24,14 +24,14 @@
               Admins of the chat<span class="asteriskField">*</span>
             </label>
             <select
-              name="admins"
+              name="room_admins"
               class="selectmultiple form-control"
               id="id_admins"
               multiple=""
             >
             
               {% for profile in profiles %}
-                {% if profile in rooms_admins %}
+                {% if profile in room.room_admins.all %}
                     <option value="{{profile.id}}" selected>{{profile.user.username}}</option> 
                 {% else %}
                     <option value="{{profile.id}}">{{profile.user.username}}</option> 
@@ -49,5 +49,7 @@
 <script>
     $("#id_room_photo").addClass("form-control")
     $(".requiredField").addClass("mt-4")
+    $("#div_id_profiles").hide();
+    $("#div_id_room_admins").hide();
 </script>
 {% endblock %}

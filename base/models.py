@@ -7,6 +7,7 @@ class Profile(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=False,blank=False)
     profile_code = models.CharField(max_length=8,null=False,blank=False)
     profile_photo = models.ImageField(null=False,blank=False,default='profile_pics/default_profile_pic.jpg',upload_to='profile_pics')
+    friends = models.ManyToManyField('self',related_name='users_friends')
     bio = models.CharField(max_length=160,null=True,blank=True,default='Not any information was given.')
 
     def __str__(self):
@@ -15,9 +16,9 @@ class Profile(models.Model):
 
 class Room(models.Model):
     room_name = models.CharField(null=False,blank=False,max_length=100,verbose_name="Room Name")
-    room_admins = models.ManyToManyField(Profile,verbose_name="Rooms admins",related_name="Admins")
     room_photo = models.ImageField(null=False,blank=False,default='room_pics/default_room_pic.png',upload_to='room_pics',verbose_name="Room Photo")
     profiles = models.ManyToManyField(Profile,related_name="Members")
+    room_admins = models.ManyToManyField(Profile,verbose_name="Rooms admins",related_name="Admins")
 
     def __str__(self):
         return self.room_name

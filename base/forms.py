@@ -20,4 +20,4 @@ class ChatAddForm(forms.ModelForm):
     
     class Meta:
         model = Room
-        fields = ['room_name','room_photo']
+        fields = '__all__'
